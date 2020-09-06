@@ -1,0 +1,7 @@
+---
+- hosts: hostname
+  become: yes
+  roles:
+    - role_1
+    - role_2 
+    - role_3
