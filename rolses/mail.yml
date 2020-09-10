@@ -1,1 +1,68 @@
-This is first ymla 
+                                      
+terraform {
+  backend "s3" {}
+}
+
+provider "aws" {
+  version = "~> 1.0"
+  region  = "${var.aws_region}"
+  
+
+assume_role {
+    role_arn = "arn:aws:iam::${var.aws_account}:role/${var.team_name}/${var.team_deployer_role}"
+  }
+}
+
+
+data "aws_vpc" "my_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.vpc_name}"]
+  }
+  state = "available"
+}
+
+data "aws_subnet" "subnet_1" {
+  filter {
+    name    = "tag:Name"
+    values  = ["${var.elb-sub-1}"]
+  }
+}
+data "aws_subnet" "subnet_2" {
+  filter {
+    name    = "tag:Name"
+    values  = ["${var.elb-sub-2}"]
+  }
+}
+
+data "aws_security_group" "mgmt_sg" {
+  name   = "${var.mgmt_sg_name}"
+  vpc_id = "${data.aws_vpc.my_vpc.id}"
+}
+data "aws_security_group" "alb_sg" {
+  name   = "${var.alb_sg_name}-${var.role}"
+  vpc_id = "${data.aws_vpc.my_vpc.id}"
+}
+
+#============================================# 
+module "aws_lb" {
+  source                      = "../../../fdp-modules/aws_lb/alb"
+   
+  alb_name                           = "${var.albName}"
+  alb_type                           = "${var.albType}"  
+  alb_sg_id                          = ["${data.aws_security_group.mgmt_sg.id}","${data.aws_security_group.alb_sg.id}"]
+  alb_subnet                         = ["${data.aws_subnet.subnet_1.id}","${data.aws_subnet.subnet_2.id}"]
+                                      
+  tag_Costcentre_Projectcode         = "${var.tag_costcentre_projectcode}"
+  tag_env                            = "${var.tag_env}"
+  stack_name                         = "${var.albName}"
+  tag_Owner                          = "${var.tag_owner}"
+  tag_team                           = "${var.tag_team}"
+  tag_role                           = "${var.tag_role }"
+  tag_HSN 	                         = "${var.tag_hsn }"
+  
+  }
+
+
+
+
