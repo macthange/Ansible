@@ -9,14 +9,12 @@ variable "az_count"                         {}
 variable "mgmt_sg_name"                     {}
 variable "alb_sg_name"                      {}
 variable "albName"                          {}
-variable "albType"                          {}
-      
+variable "albType"                          {}      
 variable "tag_env"                          {}
 #variable "stack_name"                       {}
 variable "tag_owner"                        {}
 variable "tag_team"                         {}
 variable "tag_role"                         {}
-variable "tag_hsn"                          {}
 variable "elb-sub-1"                        {}
 variable "elb-sub-2"                        {}
 #variable "elb-sub-3"                       {}
