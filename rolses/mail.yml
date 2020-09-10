@@ -51,9 +51,7 @@ module "aws_lb" {
   alb_name                           = "${var.albName}"
   alb_type                           = "${var.albType}"  
   alb_sg_id                          = ["${data.aws_security_group.mgmt_sg.id}","${data.aws_security_group.alb_sg.id}"]
-  alb_subnet                         = ["${data.aws_subnet.subnet_1.id}","${data.aws_subnet.subnet_2.id}"]
-                                      
-  tag_Costcentre_Projectcode         = "${var.tag_costcentre_projectcode}"
+  alb_subnet                         = ["${data.aws_subnet.subnet_1.id}","${data.aws_subnet.subnet_2.id}"]                                  
   tag_env                            = "${var.tag_env}"
   stack_name                         = "${var.albName}"
   tag_Owner                          = "${var.tag_owner}"
