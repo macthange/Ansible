@@ -57,7 +57,7 @@ module "aws_lb" {
   tag_Owner                          = "${var.tag_owner}"
   tag_team                           = "${var.tag_team}"
   tag_role                           = "${var.tag_role }"
-  tag_HSN 	                         = "${var.tag_hsn }"
+  
   
   }
 
