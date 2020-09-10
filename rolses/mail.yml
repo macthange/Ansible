@@ -46,7 +46,7 @@ data "aws_security_group" "alb_sg" {
 
 #============================================# 
 module "aws_lb" {
-  source                      = "../../../fdp-modules/aws_lb/alb"
+  source                      = "../../../my-modules/aws_lb/alb"
    
   alb_name                           = "${var.albName}"
   alb_type                           = "${var.albType}"  
